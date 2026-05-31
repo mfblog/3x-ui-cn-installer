@@ -11,8 +11,15 @@
 ## 中文安装 3x-ui
 
 <!-- sync-info:start -->
-官方脚本同步时间：`2026-05-31 04:05:09 CST`
-中文脚本生成时间：`2026-05-31 04:05:09 CST`
+### 最近一次官方同步状态
+
+- 官方来源：`MHSanaei/3x-ui` 的 `main` 分支
+- 官方 commit：`998fa0dfe1a1`
+- 同步时间：`2026-06-01 04:03:48 CST`
+- 官方脚本变更：`install.sh +0 -0`，`x-ui.sh +0 -0`
+- 未翻译用户可见文案：`0` 条
+- 校验状态：`通过，未修改官方安装逻辑`
+- 详细状态：[`generated/sync-status.md`](generated/sync-status.md)
 <!-- sync-info:end -->
 
 ```bash
@@ -24,6 +31,7 @@ bash <(curl -Ls https://raw.githubusercontent.com/V2RaySSR/3x-ui-cn-installer/la
 - `generated/install-cn.sh`：中文安装脚本，用户直接执行这个文件
 - `generated/x-ui-cn.sh`：安装后的中文 `x-ui` 管理脚本
 - `generated/metadata.json`：最近一次官方同步和中文生成时间
+- `generated/sync-status.md`：完整同步记录，README 首页只展示最近一次
 - `upstream/install.sh`：同步自官方的原始安装脚本
 - `upstream/x-ui.sh`：同步自官方的原始管理脚本
 - `translations.yml`：中文翻译映射表

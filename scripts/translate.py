@@ -138,10 +138,13 @@ def 使用中文管理脚本下载地址(内容: str) -> str:
     中文地址 = "https://raw.githubusercontent.com/V2RaySSR/3x-ui-cn-installer/latest/generated/x-ui-cn.sh"
     for 官方地址 in 官方地址列表:
         内容 = 内容.replace(官方地址, 中文地址)
-    内容 = 内容.replace(
+    官方安装命令列表 = [
         "bash <(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh)",
-        "bash <(curl -Ls https://raw.githubusercontent.com/V2RaySSR/3x-ui-cn-installer/latest/generated/install-cn.sh)",
-    )
+        "bash <(curl -Ls https://raw.githubusercontent.com/MHSanaei/3x-ui/main/install.sh)",
+    ]
+    中文安装命令 = "bash <(curl -Ls https://raw.githubusercontent.com/V2RaySSR/3x-ui-cn-installer/latest/generated/install-cn.sh)"
+    for 官方安装命令 in 官方安装命令列表:
+        内容 = 内容.replace(官方安装命令, 中文安装命令)
     return 内容
 
 

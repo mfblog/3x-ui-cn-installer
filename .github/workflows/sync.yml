@@ -30,8 +30,11 @@ jobs:
       - name: 拉取官方安装脚本
         run: |
           mkdir -p upstream generated
-          curl -L https://raw.githubusercontent.com/MHSanaei/3x-ui/master/install.sh -o upstream/install.sh
-          curl -L https://raw.githubusercontent.com/MHSanaei/3x-ui/main/x-ui.sh -o upstream/x-ui.sh
+          curl -fsSL https://raw.githubusercontent.com/MHSanaei/3x-ui/main/install.sh -o upstream/install.sh
+          curl -fsSL https://raw.githubusercontent.com/MHSanaei/3x-ui/main/x-ui.sh -o upstream/x-ui.sh
+          head -n 1 upstream/install.sh | grep -q '^#!.*bash'
+          head -n 1 upstream/x-ui.sh | grep -q '^#!.*bash'
+          echo "OFFICIAL_COMMIT=$(git ls-remote https://github.com/MHSanaei/3x-ui.git refs/heads/main | awk '{print $1}')" >> "$GITHUB_ENV"
 
       - name: 生成中文安装脚本
         run: python scripts/translate.py
@@ -44,12 +47,31 @@ jobs:
 
       - name: 更新同步时间
         run: python scripts/update_metadata.py
+        env:
+          I18N_REPORT_PATH: /tmp/i18n-report.md
+
+      - name: 生成公开同步摘要
+        run: |
+          {
+            echo "## 同步状态"
+            awk '
+              /^## / { count += 1 }
+              count < 2 { print }
+            ' generated/sync-status.md
+            echo
+            echo "## 翻译报告"
+            cat /tmp/i18n-report.md
+          } > /tmp/sync-pr-body.md
+          awk '
+            /^## / { count += 1 }
+            count < 2 { print }
+          ' generated/sync-status.md >> "$GITHUB_STEP_SUMMARY"
 
       - name: 发布同步时间到 README
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add README.md generated/metadata.json
+          git add README.md generated/metadata.json generated/sync-status.md
           if ! git diff --cached --quiet; then
             git commit -m "更新同步时间"
             git push origin HEAD:${{ github.ref_name }}
@@ -70,6 +92,7 @@ jobs:
           cp generated/install-cn.sh /tmp/3x-ui-cn-latest/generated/install-cn.sh
           cp generated/x-ui-cn.sh /tmp/3x-ui-cn-latest/generated/x-ui-cn.sh
           cp generated/metadata.json /tmp/3x-ui-cn-latest/generated/metadata.json
+          cp generated/sync-status.md /tmp/3x-ui-cn-latest/generated/sync-status.md
 
           cd /tmp/3x-ui-cn-latest
           git init
@@ -78,7 +101,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          git add generated/install-cn.sh generated/x-ui-cn.sh generated/metadata.json
+          git add generated/install-cn.sh generated/x-ui-cn.sh generated/metadata.json generated/sync-status.md
           git commit -m "自动发布中文安装脚本"
 
           git remote add origin "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git"
@@ -92,8 +115,10 @@ jobs:
             upstream/x-ui.sh
             generated/install-cn.sh
             generated/x-ui-cn.sh
+            generated/metadata.json
+            generated/sync-status.md
           commit-message: "同步官方安装脚本并生成中文版"
           branch: "auto/sync-upstream-install"
           delete-branch: true
           title: "同步官方安装脚本并生成中文版"
-          body-path: /tmp/i18n-report.md
+          body-path: /tmp/sync-pr-body.md

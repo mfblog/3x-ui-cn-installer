@@ -28,46 +28,104 @@ import translate
     "API",
     "Arch",
     "BBR",
+    "CA",
     "Cert",
     "Cloudflare",
     "CUBIC",
     "CPU",
+    "Caddy",
+    "Cookie",
     "ED25519",
     "Fail2ban",
     "Geo",
     "GitHub",
     "HTTP",
     "IP",
+    "INIT",
     "IPv4",
     "IPv6",
     "Key",
     "Let's Encrypt",
+    "Let'sEncrypt",
+    "Loyalsoldier",
+    "PGPASSWORD",
+    "PostgreSQL",
     "Reloadcmd",
     "SSL",
+    "SSH",
+    "SQLite",
     "Speedtest",
+    "TLS",
+    "Token",
+    "Traefik",
     "UFW",
+    "Web",
     "WebBasePath",
     "Xray",
     "acme.sh",
+    "bash",
+    "bbr",
+    "core",
     "cron",
+    "crt",
     "curl",
+    "date",
+    "dbname",
+    "debian",
+    "default_qdisc",
+    "disable",
+    "dump",
     "jail",
     "listenIP",
     "etckeeper",
+    "fq",
     "fullchain",
+    "gitignore",
+    "host",
     "https",
+    "http",
+    "ipv4",
+    "key",
+    "localhost",
+    "mode",
+    "postgres",
     "nginx",
+    "pass",
+    "port",
     "privatekey",
     "privkey",
+    "psql",
     "rc-service",
+    "reload",
     "reloadcmd",
+    "restart",
+    "rhel",
+    "service",
     "root",
+    "snap",
     "systemctl",
     "systemd",
+    "sysctl",
     "tar.gz",
+    "tcp_congestion_control",
+    "ufw",
+    "user",
     "x-ui",
     "arch",
     "armv",
+    "chocolate4u",
+    "pg_dump",
+    "pg_restore",
+    "postgresql-client",
+    "runetfreedom",
+    "socat",
+    "ssh",
+    "sshkeypath",
+    "sslmode",
+    "sudo",
+    "superuser",
+    "tcp",
+    "xray-core",
 )
 
 
@@ -122,9 +180,17 @@ def 是允许的下载地址替换(原行: str, 新行: str) -> bool:
     if any(官方地址 in 原行 and 中文地址 in 新行 and 原行.replace(官方地址, 中文地址) == 新行 for 官方地址 in 官方地址列表):
         return True
 
-    官方安装命令 = "bash <(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh)"
+    官方安装命令列表 = [
+        "bash <(curl -Ls https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh)",
+        "bash <(curl -Ls https://raw.githubusercontent.com/MHSanaei/3x-ui/main/install.sh)",
+    ]
     中文安装命令 = "bash <(curl -Ls https://raw.githubusercontent.com/V2RaySSR/3x-ui-cn-installer/latest/generated/install-cn.sh)"
-    return 官方安装命令 in 原行 and 中文安装命令 in 新行 and 原行.replace(官方安装命令, 中文安装命令) == 新行
+    return any(
+        官方安装命令 in 原行
+        and 中文安装命令 in 新行
+        and 原行.replace(官方安装命令, 中文安装命令) == 新行
+        for 官方安装命令 in 官方安装命令列表
+    )
 
 
 def 检查_bash_语法(路径: Path) -> str | None:
@@ -194,11 +260,12 @@ def 提取可能未翻译文案(生成内容: str) -> list[str]:
 
 def 去除允许英文片段(文本: str) -> str:
     结果 = 文本
+    结果 = re.sub(r"https?://\S+", " ", 结果)
+    结果 = re.sub(r"\$?\(?sysctl\s+-n\s+[A-Za-z0-9_.]+\)?", " ", 结果)
     for 片段 in sorted(允许英文片段, key=len, reverse=True):
         结果 = 结果.replace(片段, " ")
-    结果 = re.sub(r"https?://\S+", " ", 结果)
     结果 = re.sub(r"\b[a-z0-9_.+-]+/[a-z0-9_.+-]+\b", " ", 结果, flags=re.I)
-    结果 = re.sub(r"\b[a-z0-9_.+-]+\.(dat|pem|key|log|conf|service|sh|db)\b", " ", 结果, flags=re.I)
+    结果 = re.sub(r"\b[a-z0-9_.+-]+\.(dat|pem|key|log|conf|service|sh|db)(\.[a-z0-9_-]+)?\b", " ", 结果, flags=re.I)
     结果 = re.sub(r"\b[a-z0-9_.+-]*x-ui[a-z0-9_.+-]*\b", " ", 结果, flags=re.I)
     结果 = re.sub(r"\s+", " ", 结果)
     return 结果
