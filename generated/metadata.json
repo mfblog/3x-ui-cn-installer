@@ -2,29 +2,29 @@
   "official_repository": "https://github.com/MHSanaei/3x-ui",
   "official_branch": "main",
   "official_commit": "b1c141a515da765b621fe630d28c0f0bbc06d00b",
-  "official_script_synced_at": "2026-06-01 01:35:13 CST",
-  "chinese_script_generated_at": "2026-06-01 01:35:13 CST",
+  "official_script_synced_at": "2026-06-01 01:42:02 CST",
+  "chinese_script_generated_at": "2026-06-01 01:42:02 CST",
   "validation_status": "passed",
-  "official_change_detected": true,
+  "official_change_detected": false,
   "official_change_summary": {
     "install.sh": {
-      "additions": 559,
-      "deletions": 231
+      "additions": 0,
+      "deletions": 0
     },
     "x-ui.sh": {
-      "additions": 838,
-      "deletions": 735
+      "additions": 0,
+      "deletions": 0
     }
   },
   "untranslated_user_visible_text_count": 0,
   "upstream_scripts": {
     "install.sh": {
       "lines": 1314,
-      "sha256": "43b966033300446b35f528c5796bf65fbfdf73ba7e19e072d3034c90f3290236"
+      "sha256": "af2f4a9573d11089e0fdd8755a9e970aa87d5e9cbf5b300502ef2248e7c54c84"
     },
     "x-ui.sh": {
       "lines": 2489,
-      "sha256": "2e876896a3bbf7e029a45f10f7a93f07519e3a04ee6b1e99ebb40df4f0dce170"
+      "sha256": "d9476e80aec0c7133716df9afbe7a972eefde056df65aff2563c31b55c4b5353"
     }
   },
   "generated_scripts": {
