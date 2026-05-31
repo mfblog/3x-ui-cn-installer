@@ -11,8 +11,15 @@
 ## 中文安装 3x-ui
 
 <!-- sync-info:start -->
-官方脚本同步时间：`2026-05-31 04:05:09 CST`
-中文脚本生成时间：`2026-05-31 04:05:09 CST`
+### 最近一次官方同步状态
+
+- 官方来源：`MHSanaei/3x-ui` 的 `main` 分支
+- 官方 commit：`b1c141a515da`
+- 同步时间：`2026-06-01 01:35:13 CST`
+- 官方脚本变更：`install.sh +559 -231`，`x-ui.sh +838 -735`
+- 未翻译用户可见文案：`0` 条
+- 校验状态：`通过，未修改官方安装逻辑`
+- 详细状态：[`generated/sync-status.md`](generated/sync-status.md)
 <!-- sync-info:end -->
 
 ```bash

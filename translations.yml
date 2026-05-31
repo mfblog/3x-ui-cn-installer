@@ -1343,3 +1343,186 @@
 
   - 原文: "Unsupported operating system. Please uninstall Fail2ban manually."
     译文: "不支持的操作系统。请手动卸载 Fail2ban。"
+
+  - 原文: "Unsupported distro for automatic PostgreSQL install:"
+    译文: "不支持自动安装 PostgreSQL 的发行版："
+
+  - 原文: "Failed to write PostgreSQL credentials to"
+    译文: "写入 PostgreSQL 凭据失败："
+
+  - 原文: "Installing PostgreSQL client tools (pg_dump/pg_restore) for in-panel backup..."
+    译文: "正在安装 PostgreSQL 客户端工具（pg_dump/pg_restore），用于面板内备份..."
+
+  - 原文: "Skip SSL (advanced — behind reverse proxy / SSH tunnel only)"
+    译文: "跳过 SSL（高级选项，仅适用于反向代理 / SSH 隧道后方）"
+
+  - 原文: "Option 4 serves the panel over plain HTTP — only safe behind nginx/Caddy or an SSH tunnel."
+    译文: "选项 4 会通过纯 HTTP 提供面板服务，仅在 nginx/Caddy 后方或通过 SSH 隧道访问时才安全。"
+
+  - 原文: "Panel will be installed WITHOUT SSL/TLS."
+    译文: "面板将在未启用 SSL/TLS 的情况下安装。"
+
+  - 原文: "Login credentials and cookies will travel as plain HTTP."
+    译文: "登录凭据和 Cookie 将通过纯 HTTP 传输。"
+
+  - 原文: "Only safe when:"
+    译文: "仅在以下情况安全："
+
+  - 原文: "A reverse proxy (nginx, Caddy, Traefik) terminates TLS for you, or"
+    译文: "由反向代理（nginx、Caddy、Traefik）终止 TLS，或"
+
+  - 原文: "You access the panel exclusively via SSH tunnel"
+    译文: "你只通过 SSH 隧道访问面板"
+
+  - 原文: "Bind the panel to 127.0.0.1 only? (recommended — forces SSH tunnel / reverse-proxy access) [y/N]:"
+    译文: "是否仅绑定面板到 127.0.0.1？（推荐，会强制通过 SSH 隧道 / 反向代理访问）[y/N]："
+
+  - 原文: "Panel bound to 127.0.0.1 only. It is now unreachable from the public internet."
+    译文: "面板已仅绑定到 127.0.0.1，公网现在无法直接访问。"
+
+  - 原文: "SSH Port Forwarding — open the panel from your local machine via:"
+    译文: "SSH 端口转发：从本地电脑通过以下方式打开面板："
+
+  - 原文: "Standard SSH command:"
+    译文: "标准 SSH 命令："
+
+  - 原文: "If using an SSH key:"
+    译文: "如果使用 SSH 密钥："
+
+  - 原文: "Then open in your browser:"
+    译文: "然后在浏览器中打开："
+
+  - 原文: "Alternative: point a reverse proxy (nginx/Caddy) at 127.0.0.1:"
+    译文: "或者：将反向代理（nginx/Caddy）指向 127.0.0.1："
+
+  - 原文: "and let it terminate TLS."
+    译文: "并由它终止 TLS。"
+
+  - 原文: "Panel will listen on all interfaces over plain HTTP. Make sure something else is terminating TLS in front of it."
+    译文: "面板将通过纯 HTTP 监听所有网卡，请确保前方已有其他服务负责终止 TLS。"
+
+  - 原文: "SSL setup skipped."
+    译文: "已跳过 SSL 设置。"
+
+  - 原文: "Could not auto-detect server IP from any provider."
+    译文: "无法从任何提供商自动检测服务器 IP。"
+
+  - 原文: "Please enter your server's public IPv4 address:"
+    译文: "请输入服务器公网 IPv4 地址："
+
+  - 原文: "Invalid IPv4 address. Please try again."
+    译文: "IPv4 地址无效，请重试。"
+
+  - 原文: "Database Selection"
+    译文: "数据库选择"
+
+  - 原文: "SQLite (default — recommended for < 500 clients)"
+    译文: "SQLite（默认，推荐用于少于 500 个客户端）"
+
+  - 原文: "SQLite     (default — recommended for < 500 clients)"
+    译文: "SQLite     （默认，推荐用于少于 500 个客户端）"
+
+  - 原文: "PostgreSQL (recommended for high client counts / many nodes)"
+    译文: "PostgreSQL（推荐用于大量客户端 / 多节点）"
+
+  - 原文: "Choose [1]:"
+    译文: "请选择 [1]："
+
+  - 原文: "Install PostgreSQL locally and create a dedicated user/db (recommended)"
+    译文: "在本机安装 PostgreSQL 并创建专用用户/数据库（推荐）"
+
+  - 原文: "Use an existing PostgreSQL server (enter DSN)"
+    译文: "使用已有 PostgreSQL 服务器（输入 DSN）"
+
+  - 原文: "Enter PostgreSQL DSN (postgres://user:pass@host:port/dbname?sslmode=disable):"
+    译文: "请输入 PostgreSQL DSN（postgres://user:pass@host:port/dbname?sslmode=disable）："
+
+  - 原文: "Installing PostgreSQL — this may take a moment..."
+    译文: "正在安装 PostgreSQL，可能需要一点时间..."
+
+  - 原文: "Failed to create temporary credentials file."
+    译文: "创建临时凭据文件失败。"
+
+  - 原文: "PostgreSQL installation failed."
+    译文: "PostgreSQL 安装失败。"
+
+  - 原文: "Retry local install"
+    译文: "重试本机安装"
+
+  - 原文: "Enter an external DSN instead"
+    译文: "改为输入外部 DSN"
+
+  - 原文: "Abort install"
+    译文: "中止安装"
+
+  - 原文: "Fall back to SQLite"
+    译文: "回退到 SQLite"
+
+  - 原文: "Install aborted."
+    译文: "安装已中止。"
+
+  - 原文: "Could not install pg_dump/pg_restore. In-panel database backup/restore will be unavailable until you install the postgresql-client package."
+    译文: "无法安装 pg_dump/pg_restore。在安装 postgresql-client 软件包前，面板内数据库备份/恢复将不可用。"
+
+  - 原文: "SSL is strongly recommended. Skip only if a reverse proxy"
+    译文: "强烈建议启用 SSL。仅当反向代理"
+
+  - 原文: "or SSH tunnel handles TLS for you."
+    译文: "或 SSH 隧道已为你处理 TLS 时才跳过。"
+
+  - 原文: "SSL Certificate: Skipped — panel is HTTP-only. Use a reverse proxy or SSH tunnel."
+    译文: "SSL 证书：已跳过，面板仅使用 HTTP。请使用反向代理或 SSH 隧道。"
+
+  - 原文: "PostgreSQL backup & restore is built into the panel:"
+    译文: "面板已内置 PostgreSQL 备份与恢复："
+
+  - 原文: "Back Up downloads a pg_dump .dump file; Restore reloads it via pg_restore."
+    译文: "备份会下载 pg_dump 的 .dump 文件；恢复会通过 pg_restore 重新导入。"
+
+  - 原文: "PostgreSQL Credentials"
+    译文: "PostgreSQL 凭据"
+
+  - 原文: "DB Name:"
+    译文: "数据库名："
+
+  - 原文: "Database:"
+    译文: "数据库："
+
+  - 原文: "API Token:"
+    译文: "API 令牌："
+
+  - 原文: "Backup & Restore"
+    译文: "备份与恢复"
+
+  - 原文: "Error:"
+    译文: "错误："
+
+  - 原文: "Host:"
+    译文: "主机："
+
+  - 原文: "Env file:"
+    译文: "环境文件："
+
+  - 原文: "Connect from this server:"
+    译文: "从此服务器连接："
+
+  - 原文: "as the postgres superuser"
+    译文: "以 postgres 超级用户身份"
+
+  - 原文: "The panel reads these credentials from"
+    译文: "面板会从这里读取这些凭据："
+
+  - 原文: "Save the password — it is not stored anywhere else in plain text."
+    译文: "请保存密码，它不会以明文形式存储在其他位置。"
+
+  - 原文: "Panel paths set for IP:"
+    译文: "已为 IP 设置面板路径："
+
+  - 原文: "Certificate or private key file not found for IP:"
+    译文: "未找到该 IP 的证书或私钥文件："
+
+  - 原文: "Current SSH Port Forwarding Configuration:"
+    译文: "当前 SSH 端口转发配置："
+
+  - 原文: "SSH Port Forwarding Configuration:"
+    译文: "SSH 端口转发配置："

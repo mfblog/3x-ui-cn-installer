@@ -1,5 +1,41 @@
 {
-  "official_script_synced_at": "2026-05-31 04:05:09 CST",
-  "chinese_script_generated_at": "2026-05-31 04:05:09 CST",
+  "official_repository": "https://github.com/MHSanaei/3x-ui",
+  "official_branch": "main",
+  "official_commit": "b1c141a515da765b621fe630d28c0f0bbc06d00b",
+  "official_script_synced_at": "2026-06-01 01:35:13 CST",
+  "chinese_script_generated_at": "2026-06-01 01:35:13 CST",
+  "validation_status": "passed",
+  "official_change_detected": true,
+  "official_change_summary": {
+    "install.sh": {
+      "additions": 559,
+      "deletions": 231
+    },
+    "x-ui.sh": {
+      "additions": 838,
+      "deletions": 735
+    }
+  },
+  "untranslated_user_visible_text_count": 0,
+  "upstream_scripts": {
+    "install.sh": {
+      "lines": 1314,
+      "sha256": "43b966033300446b35f528c5796bf65fbfdf73ba7e19e072d3034c90f3290236"
+    },
+    "x-ui.sh": {
+      "lines": 2489,
+      "sha256": "2e876896a3bbf7e029a45f10f7a93f07519e3a04ee6b1e99ebb40df4f0dce170"
+    }
+  },
+  "generated_scripts": {
+    "install-cn.sh": {
+      "lines": 1317,
+      "sha256": "6831fb3df4957bce2f58b33aa3ccfa21abd1bc7a209b60dcccfedab58d0d6d05"
+    },
+    "x-ui-cn.sh": {
+      "lines": 2492,
+      "sha256": "385191069cf4298f1e405a85c9b9da00d82fa1f3bcb0c478899815af15516dc1"
+    }
+  },
   "timezone": "Asia/Shanghai"
 }
