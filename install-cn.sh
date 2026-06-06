@@ -86,6 +86,20 @@ download_file() {
     curl -4fLRo "$output" "$url" || curl -fLRo "$output" "$url"
 }
 
+show_fixed_version_notice() {
+    echo -e ""
+    echo -e "${green}╔════════════════════════════════════════════════════════════════╗${plain}"
+    echo -e "${green}║              3x-ui 中文固定版安装说明                         ║${plain}"
+    echo -e "${green}╠════════════════════════════════════════════════════════════════╣${plain}"
+    echo -e "${green}║${plain} 本脚本将安装：${yellow}官方 3x-ui ${fixed_version} 中文固定版${plain}"
+    echo -e "${green}║${plain} 固定原因：配合 V2RaySSR 视频教程，安装流程和视频保持一致。"
+    echo -e "${green}║${plain} 对新手来说，固定版本可以避免官方新版界面和步骤变化导致卡住。"
+    echo -e "${green}║${plain} 核心安装包、中文菜单和服务文件均来自本仓库固定资源。"
+    echo -e "${green}║${plain} 官方项目：${blue}https://github.com/MHSanaei/3x-ui${plain}"
+    echo -e "${green}╚════════════════════════════════════════════════════════════════╝${plain}"
+    echo -e ""
+}
+
 install_base() {
     case "${release}" in
         ubuntu | debian | armbian)
@@ -799,8 +813,9 @@ install_x-ui() {
     cd ${xui_folder%/x-ui}/
 
     # 下载资源
+    tag_version="${fixed_version}"
+    show_fixed_version_notice
     if [ $# == 0 ]; then
-        tag_version="${fixed_version}"
         echo -e "开始安装固定版本 x-ui ${tag_version}..."
         download_file ${xui_folder}-linux-$(arch).tar.gz ${release_base}/x-ui-linux-$(arch).tar.gz
         if [[ $? -ne 0 ]]; then
@@ -808,7 +823,6 @@ install_x-ui() {
             exit 1
         fi
     else
-        tag_version="${fixed_version}"
         if [[ "$1" != "${fixed_version}" ]]; then
             echo -e "${yellow}本项目已固定为官方 ${fixed_version} 中文版，已忽略传入版本： $1${plain}"
         fi
