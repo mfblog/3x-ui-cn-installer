@@ -81,6 +81,13 @@ is_port_in_use() {
     return 1
 }
 
+download_file() {
+    local output="$1"
+    local url="$2"
+
+    curl -4fLRo "$output" "$url" || curl -fLRo "$output" "$url"
+}
+
 install_base() {
     case "${release}" in
         ubuntu | debian | armbian)
@@ -1120,18 +1127,19 @@ install_x-ui() {
     cd ${xui_folder%/x-ui}/
 
     tag_version="${fixed_version}"
+    arch_value="$(arch)"
     if [[ $# -gt 0 && "$1" != "${fixed_version}" && "$1" != "${fixed_release}" ]]; then
         echo -e "${yellow}本中文安装器固定为教程同款 ${fixed_version}，已忽略你输入的版本：$1${plain}"
     fi
 
     echo -e "正在安装视频教程同款 x-ui ${tag_version} 中文固定版..."
-    curl -4fLRo ${xui_folder}-linux-$(arch).tar.gz "${release_base}/x-ui-linux-$(arch).tar.gz"
+    download_file "${xui_folder}-linux-${arch_value}.tar.gz" "${release_base}/x-ui-linux-${arch_value}.tar.gz"
     if [[ $? -ne 0 ]]; then
         echo -e "${red}下载 x-ui ${tag_version} 失败，请确认你的服务器可以访问 ${mirror_repo} 的固定 Release 资源。${plain}"
         exit 1
     fi
 
-    curl -4fLRo /usr/bin/x-ui-temp "${raw_base}/x-ui-cn.sh"
+    download_file /usr/bin/x-ui-temp "${raw_base}/x-ui-cn.sh"
     if [[ $? -ne 0 ]]; then
         echo -e "${red}下载中文 x-ui 管理脚本失败${plain}"
         exit 1
@@ -1148,19 +1156,19 @@ install_x-ui() {
     fi
 
     # Extract resources and set permissions
-    tar zxvf x-ui-linux-$(arch).tar.gz
-    rm x-ui-linux-$(arch).tar.gz -f
+    tar zxvf "x-ui-linux-${arch_value}.tar.gz"
+    rm "x-ui-linux-${arch_value}.tar.gz" -f
 
     cd x-ui
     chmod +x x-ui
     chmod +x x-ui.sh
 
     # Check the system's architecture and rename the file accordingly
-    if [[ $(arch) == "armv5" || $(arch) == "armv6" || $(arch) == "armv7" ]]; then
-        mv bin/xray-linux-$(arch) bin/xray-linux-arm
+    if [[ "${arch_value}" == "armv5" || "${arch_value}" == "armv6" || "${arch_value}" == "armv7" ]]; then
+        mv "bin/xray-linux-${arch_value}" bin/xray-linux-arm
         chmod +x x-ui bin/xray-linux-arm
     else
-        chmod +x x-ui bin/xray-linux-$(arch)
+        chmod +x x-ui "bin/xray-linux-${arch_value}"
     fi
 
     # Update x-ui cli and se set permission
@@ -1184,7 +1192,7 @@ install_x-ui() {
     fi
 
     if [[ $release == "alpine" ]]; then
-        curl -4fLRo /etc/init.d/x-ui "${raw_base}/assets/x-ui.rc"
+        download_file /etc/init.d/x-ui "${raw_base}/assets/x-ui.rc"
         if [[ $? -ne 0 ]]; then
             echo -e "${red}下载 x-ui.rc 失败${plain}"
             exit 1
