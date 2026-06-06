@@ -88,15 +88,15 @@ download_file() {
 
 show_fixed_version_notice() {
     echo -e ""
-    echo -e "${green}╔════════════════════════════════════════════════════════════════╗${plain}"
-    echo -e "${green}║              3x-ui 中文固定版安装说明                         ║${plain}"
-    echo -e "${green}╠════════════════════════════════════════════════════════════════╣${plain}"
-    echo -e "${green}║${plain} 本脚本将安装：${yellow}官方 3x-ui ${fixed_version} 中文固定版${plain}"
-    echo -e "${green}║${plain} 固定原因：配合 V2RaySSR 视频教程，安装流程和视频保持一致。"
-    echo -e "${green}║${plain} 对新手来说，固定版本可以避免官方新版界面和步骤变化导致卡住。"
-    echo -e "${green}║${plain} 核心安装包、中文菜单和服务文件均来自本仓库固定资源。"
-    echo -e "${green}║${plain} 官方项目：${blue}https://github.com/MHSanaei/3x-ui${plain}"
-    echo -e "${green}╚════════════════════════════════════════════════════════════════╝${plain}"
+    echo -e "${green}================================================================${plain}"
+    echo -e "${green}              3x-ui 中文固定版安装说明${plain}"
+    echo -e "${green}================================================================${plain}"
+    echo -e "  本脚本将安装：${yellow}官方 3x-ui ${fixed_version} 中文固定版${plain}"
+    echo -e "  固定原因：配合 V2RaySSR 视频教程，安装流程和视频保持一致。"
+    echo -e "  对新手来说，固定版本可以避免官方新版界面和步骤变化导致卡住。"
+    echo -e "  核心安装包、中文菜单和服务文件均来自本仓库固定资源。"
+    echo -e "  官方项目：${blue}https://github.com/MHSanaei/3x-ui${plain}"
+    echo -e "${green}================================================================${plain}"
     echo -e ""
 }
 
