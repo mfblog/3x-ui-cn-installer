@@ -2264,9 +2264,9 @@ show_usage() {
 │  ${blue}x-ui disable${plain}                      - 禁用开机自启              │
 │  ${blue}x-ui log${plain}                          - 查看日志                  │
 │  ${blue}x-ui banlog${plain}                       - 查看 Fail2ban 封禁日志    │
-│  ${blue}x-ui update${plain}                       - 更新                      │
+│  ${blue}x-ui update${plain}                       - 重装固定版                │
 │  ${blue}x-ui update-all-geofiles${plain}          - 更新全部 Geo 文件         │
-│  ${blue}x-ui legacy${plain}                       - 旧版                      │
+│  ${blue}x-ui legacy${plain}                       - 版本说明                  │
 │  ${blue}x-ui install${plain}                      - 安装                      │
 │  ${blue}x-ui uninstall${plain}                    - 卸载                      │
 └────────────────────────────────────────────────────────────────┘"
@@ -2279,9 +2279,9 @@ show_menu() {
 │   ${green}0.${plain} 退出脚本                                  │
 │────────────────────────────────────────────────│
 │   ${green}1.${plain} 安装                                      │
-│   ${green}2.${plain} 更新                                      │
+│   ${green}2.${plain} 重装固定版                                │
 │   ${green}3.${plain} 更新菜单                                  │
-│   ${green}4.${plain} 旧版                                      │
+│   ${green}4.${plain} 版本说明                                  │
 │   ${green}5.${plain} 卸载                                      │
 │────────────────────────────────────────────────│
 │   ${green}6.${plain} 重置用户名和密码                          │

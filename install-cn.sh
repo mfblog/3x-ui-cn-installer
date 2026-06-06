@@ -1269,8 +1269,8 @@ install_x-ui() {
 │  ${blue}x-ui disable${plain}          - 禁用开机自启                         │
 │  ${blue}x-ui log${plain}              - 查看日志                             │
 │  ${blue}x-ui banlog${plain}           - 查看 Fail2ban 封禁日志               │
-│  ${blue}x-ui update${plain}           - 更新                                 │
-│  ${blue}x-ui legacy${plain}           - 旧版                                 │
+│  ${blue}x-ui update${plain}           - 重装固定版                           │
+│  ${blue}x-ui legacy${plain}           - 版本说明                             │
 │  ${blue}x-ui install${plain}          - 安装                                 │
 │  ${blue}x-ui uninstall${plain}        - 卸载                                 │
 └───────────────────────────────────────────────────────────────┘"
