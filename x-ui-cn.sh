@@ -16,19 +16,19 @@ raw_base="https://raw.githubusercontent.com/${mirror_repo}/main"
 
 #Add some basic function here
 function LOGD() {
-    echo -e "${yellow}[DEG] $* ${plain}"
+    echo -e "${yellow}[调试] $* ${plain}"
 }
 
 function LOGE() {
-    echo -e "${red}[ERR] $* ${plain}"
+    echo -e "${red}[错误] $* ${plain}"
 }
 
 function LOGI() {
-    echo -e "${green}[INF] $* ${plain}"
+    echo -e "${green}[信息] $* ${plain}"
 }
 
 function LOGW() {
-    echo -e "${yellow}[WRN] $* ${plain}"
+    echo -e "${yellow}[警告] $* ${plain}"
 }
 
 # Port helpers: detect listener and owning process (best effort)
@@ -1435,26 +1435,26 @@ ssl_cert_issue() {
 
     reloadCmd="x-ui restart"
 
-    LOGI "ACME 默认 --reloadcmd 为： ${yellow}x-ui restart"
+    LOGI "ACME 默认重载命令为： ${yellow}x-ui restart"
     LOGI "该命令会在每次证书签发和续期时运行。"
-    read -rp "是否要修改 ACME 的 --reloadcmd？(y/n)： " setReloadcmd
+    read -rp "是否要修改 ACME 的重载命令？(y/n)： " setReloadcmd
     if [[ "$setReloadcmd" == "y" || "$setReloadcmd" == "Y" ]]; then
         echo -e "\n${green}\t1.${plain} 预设： systemctl reload nginx ; x-ui restart"
         echo -e "${green}\t2.${plain} 输入你自己的命令"
-        echo -e "${green}\t0.${plain} 保持默认 reloadcmd"
+        echo -e "${green}\t0.${plain} 保持默认重载命令"
         read -rp "请选择一个选项： " choice
         case "$choice" in
         1)
-            LOGI "Reloadcmd 为： systemctl reload nginx ; x-ui restart"
+            LOGI "重载命令为： systemctl reload nginx ; x-ui restart"
             reloadCmd="systemctl reload nginx ; x-ui restart"
             ;;
         2)
-            LOGD "建议将 x-ui restart 放在最后, 这样其他服务失败时不会影响 x-ui 重启"
-            read -rp "请输入自定义 reloadcmd（示例：systemctl reload nginx ; x-ui restart）： " reloadCmd
-            LOGI "你的 reloadcmd 是： ${reloadCmd}"
+            LOGD "建议将 x-ui restart 放在最后，这样其他服务失败时不会影响 x-ui 重启"
+            read -rp "请输入自定义重载命令（示例：systemctl reload nginx ; x-ui restart）： " reloadCmd
+            LOGI "你的重载命令是： ${reloadCmd}"
             ;;
         *)
-            LOGI "保持默认 reloadcmd"
+            LOGI "保持默认重载命令"
             ;;
         esac
     fi
@@ -1592,26 +1592,26 @@ ssl_cert_issue_CF() {
 
         reloadCmd="x-ui restart"
 
-        LOGI "ACME 默认 --reloadcmd 为： ${yellow}x-ui restart"
+        LOGI "ACME 默认重载命令为： ${yellow}x-ui restart"
         LOGI "该命令会在每次证书签发和续期时运行。"
-        read -rp "是否要修改 ACME 的 --reloadcmd？(y/n)： " setReloadcmd
+        read -rp "是否要修改 ACME 的重载命令？(y/n)： " setReloadcmd
         if [[ "$setReloadcmd" == "y" || "$setReloadcmd" == "Y" ]]; then
             echo -e "\n${green}\t1.${plain} 预设： systemctl reload nginx ; x-ui restart"
             echo -e "${green}\t2.${plain} 输入你自己的命令"
-            echo -e "${green}\t0.${plain} 保持默认 reloadcmd"
+            echo -e "${green}\t0.${plain} 保持默认重载命令"
             read -rp "请选择一个选项： " choice
             case "$choice" in
             1)
-                LOGI "Reloadcmd 为： systemctl reload nginx ; x-ui restart"
+                LOGI "重载命令为： systemctl reload nginx ; x-ui restart"
                 reloadCmd="systemctl reload nginx ; x-ui restart"
                 ;;
             2)
-                LOGD "建议将 x-ui restart 放在最后, 这样其他服务失败时不会影响 x-ui 重启"
-                read -rp "请输入自定义 reloadcmd（示例：systemctl reload nginx ; x-ui restart）： " reloadCmd
-                LOGI "你的 reloadcmd 是： ${reloadCmd}"
+                LOGD "建议将 x-ui restart 放在最后，这样其他服务失败时不会影响 x-ui 重启"
+                read -rp "请输入自定义重载命令（示例：systemctl reload nginx ; x-ui restart）： " reloadCmd
+                LOGI "你的重载命令是： ${reloadCmd}"
                 ;;
             *)
-                LOGI "保持默认 reloadcmd"
+                LOGI "保持默认重载命令"
                 ;;
             esac
         fi
@@ -1750,7 +1750,7 @@ iplimit_main() {
         iplimit_main
         ;;
     3)
-        confirm "是否解除 IP 限制 jail 中的全部封禁？" "y"
+        confirm "是否解除 IP 限制规则中的全部封禁？" "y"
         if [[ $? == 0 ]]; then
             fail2ban-client reload --restart --unban 3x-ipl
             truncate -s 0 "${iplimit_banned_log_path}"
@@ -2020,8 +2020,8 @@ show_banlog() {
         echo -e "${red}未找到封禁日志文件： ${iplimit_banned_log_path}${plain}"
     fi
 
-    echo -e "\n${green}当前 jail 状态：${plain}"
-    fail2ban-client status 3x-ipl || echo -e "${yellow}无法获取 jail 状态${plain}"
+    echo -e "\n${green}当前封禁规则状态：${plain}"
+    fail2ban-client status 3x-ipl || echo -e "${yellow}无法获取封禁规则状态${plain}"
 }
 
 create_iplimit_jails() {
@@ -2082,7 +2082,7 @@ protocol = tcp
 chain = INPUT
 EOF
 
-    echo -e "${green}IP 限制 jail 文件已创建，封禁时长为 ${bantime} 分钟。${plain}"
+    echo -e "${green}IP 限制规则文件已创建，封禁时长为 ${bantime} 分钟。${plain}"
 }
 
 iplimit_remove_conflicts() {
@@ -2095,7 +2095,7 @@ iplimit_remove_conflicts() {
         # Check for [3x-ipl] config in jail file then remove it
         if test -f "${file}" && grep -qw '3x-ipl' ${file}; then
             sed -i "/\[3x-ipl\]/,/^$/d" ${file}
-            echo -e "${yellow}正在删除 jail 中 [3x-ipl] 的冲突配置 (${file})!${plain}\n"
+            echo -e "${yellow}正在删除封禁规则中 [3x-ipl] 的冲突配置 (${file})!${plain}\n"
         fi
     done
 }
@@ -2157,7 +2157,7 @@ SSH_port_forwarding() {
     case "$num" in
     1)
         if [[ -z "$existing_listenIP" || "$existing_listenIP" == "0.0.0.0" ]]; then
-            echo -e "\n尚未配置 listenIP。 请选择一个选项："
+            echo -e "\n尚未配置监听 IP。请选择一个选项："
             echo -e "1. 使用默认 IP（127.0.0.1）"
             echo -e "2. 设置自定义 IP"
             read -rp "请选择一个选项（1 或 2）： " listen_choice

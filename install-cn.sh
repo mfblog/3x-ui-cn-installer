@@ -462,26 +462,26 @@ ssl_cert_issue() {
 
     # Setup reload command
     reloadCmd="systemctl restart x-ui || rc-service x-ui restart"
-    echo -e "${green}ACME 默认 --reloadcmd 为： ${yellow}systemctl restart x-ui || rc-service x-ui restart${plain}"
+    echo -e "${green}ACME 默认重载命令为： ${yellow}systemctl restart x-ui || rc-service x-ui restart${plain}"
     echo -e "${green}该命令会在每次证书签发和续期时运行。${plain}"
-    read -rp "是否要修改 ACME 的 --reloadcmd？(y/n)： " setReloadcmd
+    read -rp "是否要修改 ACME 的重载命令？(y/n)： " setReloadcmd
     if [[ "$setReloadcmd" == "y" || "$setReloadcmd" == "Y" ]]; then
         echo -e "\n${green}\t1.${plain} 预设：systemctl reload nginx ; systemctl restart x-ui"
         echo -e "${green}\t2.${plain} 输入你自己的命令"
-        echo -e "${green}\t0.${plain} 保持默认 reloadcmd"
+        echo -e "${green}\t0.${plain} 保持默认重载命令"
         read -rp "请选择一个选项： " choice
         case "$choice" in
         1)
-            echo -e "${green}Reloadcmd 为： systemctl reload nginx ; systemctl restart x-ui${plain}"
+            echo -e "${green}重载命令为： systemctl reload nginx ; systemctl restart x-ui${plain}"
             reloadCmd="systemctl reload nginx ; systemctl restart x-ui"
             ;;
         2)
             echo -e "${yellow}建议将 x-ui restart 放在最后${plain}"
-            read -rp "请输入自定义 reloadcmd： " reloadCmd
-            echo -e "${green}Reloadcmd 为： ${reloadCmd}${plain}"
+            read -rp "请输入自定义重载命令： " reloadCmd
+            echo -e "${green}重载命令为： ${reloadCmd}${plain}"
             ;;
         *)
-            echo -e "${green}保持默认 reloadcmd${plain}"
+            echo -e "${green}保持默认重载命令${plain}"
             ;;
         esac
     fi
@@ -750,16 +750,16 @@ config_after_install() {
             echo -e "${green}用户名：    ${config_username}${plain}"
             echo -e "${green}密码：    ${config_password}${plain}"
             echo -e "${green}端口：        ${config_port}${plain}"
-            echo -e "${green}WebBasePath: ${config_webBasePath}${plain}"
+            echo -e "${green}Web 入口路径： ${config_webBasePath}${plain}"
             echo -e "${green}访问地址：  https://${SSL_HOST}:${config_port}/${config_webBasePath}${plain}"
             echo -e "${green}═══════════════════════════════════════════${plain}"
             echo -e "${yellow}⚠ 重要：请安全保存这些登录信息！${plain}"
             echo -e "${yellow}⚠ SSL 证书：已启用并配置${plain}"
         else
             local config_webBasePath=$(gen_random_string 18)
-            echo -e "${yellow}WebBasePath 缺失或太短，正在生成新的路径...${plain}"
+            echo -e "${yellow}Web 入口路径缺失或太短，正在生成新的路径...${plain}"
             ${xui_folder}/x-ui setting -webBasePath "${config_webBasePath}"
-            echo -e "${green}新的 WebBasePath： ${config_webBasePath}${plain}"
+            echo -e "${green}新的 Web 入口路径： ${config_webBasePath}${plain}"
 
             # If the panel is already installed but no certificate is configured, prompt for SSL now
             if [[ -z "${existing_cert}" ]]; then
@@ -789,7 +789,7 @@ config_after_install() {
             echo -e "${green}密码： ${config_password}${plain}"
             echo -e "###############################################"
         else
-            echo -e "${green}用户名、密码和 WebBasePath 已正确设置。${plain}"
+            echo -e "${green}用户名、密码和 Web 入口路径已正确设置。${plain}"
         fi
 
         # Existing install: if no cert configured, prompt user for SSL setup
