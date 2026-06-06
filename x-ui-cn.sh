@@ -116,7 +116,7 @@ before_show_menu() {
 }
 
 install() {
-    bash <(curl -Ls "${raw_base}/install-cn.sh")
+    bash <(curl -fsSL "${raw_base}/install-cn.sh")
     if [[ $? == 0 ]]; then
         if [[ $# == 0 ]]; then
             start
@@ -135,7 +135,7 @@ update() {
         fi
         return 0
     fi
-    bash <(curl -Ls "${raw_base}/install-cn.sh")
+    bash <(curl -fsSL "${raw_base}/install-cn.sh")
     if [[ $? == 0 ]]; then
         LOGI "固定版重装完成，面板已自动重启 "
         before_show_menu
@@ -153,17 +153,18 @@ update_menu() {
         return 0
     fi
 
-    curl -fLRo /usr/bin/x-ui "${raw_base}/x-ui-cn.sh"
-    chmod +x ${xui_folder}/x-ui.sh
-    chmod +x /usr/bin/x-ui
-
-    if [[ $? == 0 ]]; then
-        echo -e "${green}更新成功，面板已自动重启。${plain}"
-        exit 0
-    else
+    if ! curl -fLRo /usr/bin/x-ui "${raw_base}/x-ui-cn.sh"; then
         echo -e "${red}菜单更新失败。${plain}"
         return 1
     fi
+
+    chmod +x /usr/bin/x-ui
+    if [[ -f ${xui_folder}/x-ui.sh ]]; then
+        chmod +x ${xui_folder}/x-ui.sh
+    fi
+
+    echo -e "${green}菜单更新成功，请重新运行 x-ui。${plain}"
+    exit 0
 }
 
 legacy_version() {
@@ -219,7 +220,7 @@ uninstall() {
     echo ""
     echo -e "卸载成功。\n"
     echo "如果需要重新安装面板，可以使用下面的中文安装命令："
-    echo -e "${green}bash <(curl -Ls https://raw.githubusercontent.com/V2RaySSR/3x-ui-cn-installer/main/install-cn.sh)${plain}"
+    echo -e "${green}bash <(curl -fsSL https://raw.githubusercontent.com/V2RaySSR/3x-ui-cn-installer/main/install-cn.sh)${plain}"
     echo ""
     # Trap the SIGTERM signal
     trap delete_script SIGTERM
@@ -977,9 +978,9 @@ delete_ports() {
 }
 
 update_all_geofiles() {
-    update_geofiles "main"
-    update_geofiles "IR"
-    update_geofiles "RU"
+    update_geofiles "main" || return 1
+    update_geofiles "IR" || return 1
+    update_geofiles "RU" || return 1
 }
 
 update_geofiles() {
@@ -995,8 +996,11 @@ update_geofiles() {
             ;;
     esac
     for dat in "${dat_files[@]}"; do
-        curl -fLRo ${xui_folder}/bin/${dat}.dat -z ${xui_folder}/bin/${dat}.dat \
-            "${release_base}/${dat}.dat"
+        if ! curl -fLRo ${xui_folder}/bin/${dat}.dat -z ${xui_folder}/bin/${dat}.dat \
+            "${release_base}/${dat}.dat"; then
+            echo -e "${red}${dat}.dat 下载失败，请检查网络或固定 Release 资源。${plain}"
+            return 1
+        fi
     done
 }
 
@@ -1014,22 +1018,22 @@ update_geo() {
             show_menu
             ;;
         1)
-            update_geofiles "main"
+            update_geofiles "main" || return 1
             echo -e "${green}基础 Geo 文件已更新成功！${plain}"
             restart
             ;;
         2)
-            update_geofiles "IR"
+            update_geofiles "IR" || return 1
             echo -e "${green}IR Geo 文件已更新成功！${plain}"
             restart
             ;;
         3)
-            update_geofiles "RU"
+            update_geofiles "RU" || return 1
             echo -e "${green}RU Geo 文件已更新成功！${plain}"
             restart
             ;;
         4)
-            update_all_geofiles
+            update_all_geofiles || return 1
             echo -e "${green}所有 Geo 文件已更新成功！${plain}"
             restart
             ;;
@@ -1052,8 +1056,7 @@ install_acme() {
     LOGI "正在安装 acme.sh..."
     cd ~ || return 1 # Ensure you can change to the home directory
 
-    curl -s https://get.acme.sh | sh
-    if [ $? -ne 0 ]; then
+    if ! (set -o pipefail; curl -fsSL https://get.acme.sh | sh); then
         LOGE "acme.sh 安装失败。"
         return 1
     else

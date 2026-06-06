@@ -264,8 +264,7 @@ ensure_pg_client() {
 install_acme() {
     echo -e "${green}正在安装 acme.sh 用于 SSL 证书管理...${plain}"
     cd ~ || return 1
-    curl -s https://get.acme.sh | sh > /dev/null 2>&1
-    if [ $? -ne 0 ]; then
+    if ! (set -o pipefail; curl -fsSL https://get.acme.sh | sh > /dev/null 2>&1); then
         echo -e "${red}acme.sh 安装失败${plain}"
         return 1
     else
@@ -502,8 +501,7 @@ ssl_cert_issue() {
     if ! command -v ~/.acme.sh/acme.sh &> /dev/null; then
         echo "未找到 acme.sh，正在安装..."
         cd ~ || return 1
-        curl -s https://get.acme.sh | sh
-        if [ $? -ne 0 ]; then
+        if ! (set -o pipefail; curl -fsSL https://get.acme.sh | sh); then
             echo -e "${red}acme.sh 安装失败${plain}"
             return 1
         else
@@ -1160,9 +1158,10 @@ install_x-ui() {
     # Check the system's architecture and rename the file accordingly
     if [[ $(arch) == "armv5" || $(arch) == "armv6" || $(arch) == "armv7" ]]; then
         mv bin/xray-linux-$(arch) bin/xray-linux-arm
-        chmod +x bin/xray-linux-arm
+        chmod +x x-ui bin/xray-linux-arm
+    else
+        chmod +x x-ui bin/xray-linux-$(arch)
     fi
-    chmod +x x-ui bin/xray-linux-$(arch)
 
     # Update x-ui cli and se set permission
     mv -f /usr/bin/x-ui-temp /usr/bin/x-ui

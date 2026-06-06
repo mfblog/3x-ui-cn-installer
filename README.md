@@ -14,7 +14,7 @@
 ## 一键安装
 
 ```bash
-bash <(curl -Ls https://raw.githubusercontent.com/V2RaySSR/3x-ui-cn-installer/main/install-cn.sh)
+bash <(curl -fsSL https://raw.githubusercontent.com/V2RaySSR/3x-ui-cn-installer/main/install-cn.sh)
 ```
 
 ## 项目说明
