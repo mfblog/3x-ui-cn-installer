@@ -828,9 +828,9 @@ install_x-ui() {
     # Stop x-ui service and remove old resources
     if [[ -e ${xui_folder}/ ]]; then
         if [[ $release == "alpine" ]]; then
-            rc-service x-ui stop
+            rc-service x-ui stop >/dev/null 2>&1 || echo -e "${yellow}未检测到正在运行的旧 x-ui 服务，继续安装...${plain}"
         else
-            systemctl stop x-ui
+            systemctl stop x-ui >/dev/null 2>&1 || echo -e "${yellow}未检测到正在运行的旧 x-ui 服务，继续安装...${plain}"
         fi
         rm ${xui_folder}/ -rf
     fi
